@@ -4,6 +4,7 @@
 #include<sstream>
 using namespace std;
 
+#pragma region Token
 void comma()
 {
 	string str;
@@ -20,9 +21,8 @@ void Default()
 {
 	string line;
 	string token;
-	//cin >> line;
-	getline(cin, line); // 공백문자 있을시
-	cout << line << endl;
+
+	getline(cin, line);
 
 	stringstream ss(line);
 	while (ss >> token)
@@ -31,7 +31,40 @@ void Default()
 	}
 }
 
+#pragma endregion
+
+#pragma region IsString
+bool IsInteger(char a)
+{
+	if (a >= '0' && a <= '9')
+		return true;
+	return false;
+}
+
+bool IsCharacter(char a)
+{
+	if (a >= 'a' && a <= 'z')
+		return true;
+	return false;
+}
+#pragma endregion
+
+#pragma region Parse
+int ParseToInt(string str)
+{
+	int answer = stoi(str);
+	return answer;
+}
+
+string ParseToString(int a)
+{
+	string answer = to_string(a);
+	return answer;
+}
+
+#pragma endregion
+
 int main()
 {
-	comma();
+
 }
