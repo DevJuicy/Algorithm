@@ -48,8 +48,3 @@ int Solution(string answer_sheet ,vector<string> sheets)
 	}
 	return maxValue;
 }
-
-int main()
-{
-	cout << Solution({ "24551" }, { "24553","24553","24553","24553" });
-}

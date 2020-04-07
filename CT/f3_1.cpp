@@ -65,8 +65,3 @@ int Solution(string input)
 	}
 	return answer;
 }
-
-int main()
-{
-	cout << Solution(">_<");
-}

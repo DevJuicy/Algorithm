@@ -92,8 +92,3 @@ int Solution(string road, int n)
 	}
 	return maxValue;
 }
-
-int main()
-{
-	cout << Solution({ "001100" }, 5);
-}
