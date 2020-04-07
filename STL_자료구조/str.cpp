@@ -64,6 +64,18 @@ string ParseToString(int a)
 
 #pragma endregion
 
+#pragma region Compare
+void CMP()
+{
+	string a = "abc";
+	string b = "acc";
+
+
+	//b가 a보다 크니까 1반환
+	cout << b.compare(a);
+}
+#pragma endregion
+
 int main()
 {
 
