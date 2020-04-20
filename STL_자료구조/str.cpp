@@ -76,6 +76,11 @@ void CMP()
 }
 #pragma endregion
 
+void Reverse(string str)
+{
+	reverse(str.begin(), str.end());
+}
+
 int main()
 {
 
