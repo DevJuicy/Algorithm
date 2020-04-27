@@ -5,6 +5,18 @@
 using namespace std;
 
 #pragma region Token
+vector<string> Tokenize(string ids)
+{
+	vector<string> tokenizeList;
+	string token;
+	stringstream ss(ids);
+	while (ss >> token)
+	{
+		tokenizeList.push_back(token);
+	}
+	return tokenizeList;
+}
+
 void comma()
 {
 	string str;
