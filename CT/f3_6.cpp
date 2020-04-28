@@ -43,15 +43,17 @@ queue<string> ParseToPath(string str)
 
 void PushData(Directory* parent, queue<string> path)
 {
+	// 현재 path의 맨앞디렉토리와 자식으로 나눔
+	// 맨앞디렉토리 = current / 자식 = path
 	if (path.empty())
 		return;
 	string current = path.front();
 	path.pop();
 
 	int childIndex = parent->FindChild(current);
-	if (childIndex > -1)
+	if (childIndex > -1) // 있는 디렉토리라면 해당 디렉토리로 들어가기
 		PushData(parent->childDir[childIndex], path);
-	else
+	else // 없으면 현재 디렉토리의 자식으로 새 디렉토리 생성
 	{
 		Directory* child = new Directory(current);
 		parent->childDir.push_back(child);
@@ -86,6 +88,15 @@ void PasteData(Directory* parent, queue<string> path)
 		parent->childDir[childIndex]->childDir.push_back(buffer);
 }
 
+void DuplicateToBuffer(Directory* localBuffer, Directory* target)
+{
+	for (int i = 0; i < target->childDir.size(); i++)
+	{
+		localBuffer->childDir.push_back(new Directory(target->childDir[i]->name));
+		DuplicateToBuffer(localBuffer->childDir[i], target->childDir[i]);
+	}
+}
+
 void CopyData(Directory* parent, queue<string> path)
 {
 	if (path.empty())
@@ -94,11 +105,15 @@ void CopyData(Directory* parent, queue<string> path)
 	path.pop();
 	int childIndex = parent->FindChild(current);
 
-	if (current[current.size() - 1] != ' ')
+	if (current[current.size() - 1] != ' ') // Copy명령어의 복사할 디렉토리의 끝에는 ' ' 가 붙음 
 		CopyData(parent->childDir[childIndex], path);
 	else
 	{
-		buffer = parent->childDir[childIndex];
+		// 그냥 buffer = parent->childDir[childIndex]->name 를 해버리면 call by referance로 주소값이 복사되버려서 수정했을시 복사한 파일도 영향을 받는다
+		// 그래서 call by value 형식으로 아에 새로 복제를 해준다 그게 Duplicate
+		buffer = new Directory(parent->childDir[childIndex]->name);
+		DuplicateToBuffer(buffer, parent->childDir[childIndex]);
+
 		if (!path.empty())
 			PasteData(root, path);
 		else if (path.empty())
@@ -152,4 +167,42 @@ vector<string> Solution(vector<string> directory, vector<string> command)
 		DFS(root->childDir[i], "");
 
 	return answer;
+}
+
+int main()
+{
+	//Solution(
+	//	{
+	//		"/",
+	//		"/hello",
+	//		"/hello/tmp",
+	//		"/root",
+	//		"/root/abcd",
+	//		"/root/abcd/etc",
+	//		"/root/abcd/hello"
+	//	},
+	//	{
+	//		"mkdir /root/tmp",
+	//		"cp /hello /root/tmp",
+	//		"rm /hello"
+	//	}
+	//	);
+
+	Solution(
+		{
+			"/",
+		},
+		{
+			"mkdir /a",
+			"mkdir /a/b",
+			"mkdir /a/b/c",
+			"cp /a/b /",
+			"rm /a/b/c"
+		}
+		);
+
+	for (int i = 0; i < answer.size(); i++)
+	{
+		cout << answer[i] << endl;
+	}
 }
