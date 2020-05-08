@@ -139,6 +139,7 @@ int BFS(int destinationY, int destinationX)
 			positionQ.push(Position(nextY, nextX, depth + 1));
 		}
 	}
+	return MAX;
 }
 
 int GetDistance(Fish fish)
