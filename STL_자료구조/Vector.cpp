@@ -20,6 +20,11 @@ void SameErase()
 	str.erase(unique(str.begin(), str.end()), str.end());
 }
 
+int  GetMaxElement(vector<int> stones)
+{
+	return *max_element(stones.begin(), stones.end());
+}
+
 int main()
 {
 
