@@ -62,6 +62,12 @@ bool IsCharacter(char a)
 #pragma endregion
 
 #pragma region Parse
+
+int ParseToInt(char c)
+{
+	return c - '0';
+}
+
 int ParseToInt(string str)
 {
 	int answer = stoi(str);

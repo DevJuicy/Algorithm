@@ -13,4 +13,8 @@ int main()
     {
         // found
     }
+
+    for (auto it = m.begin(); it != m.end(); it++) {
+        cout << "key : " << it->first << " " << "value : " << it->second << '\n';
+    }
 }
