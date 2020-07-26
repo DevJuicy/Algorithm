@@ -8,18 +8,19 @@ priority_queue<int> pq; // 내림차순 디폴트
 //priority_queue<pair<int, int>> pairPQ;
 priority_queue < pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pairPQ; // pair 오름차순
 
-struct pqStruct
+class pqStruct
 {
+public :
 	int start;
 	int end;
 	int value;
 };
 
-struct cmp
+class cmp
 {
-	bool operator()(pqStruct t, pqStruct u)
+	bool operator()(pqStruct b, pqStruct a)
 	{
-		return t.value < u.value;
+		return b.value < a.value;
 	}
 };
 
