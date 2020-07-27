@@ -3,50 +3,129 @@
 #include <iostream>
 using namespace std;
 
-int MinusSolution(string strNum)
+int frontArray[201];
+int backArray[201];
+
+void SearchBack(string str)
 {
-	for (int i = 1; i < strNum.size(); i++)
+	for (int i = 0; i < str.size(); i++)
 	{
-		if (strNum[i] < '5')
-			continue;
+		backArray[i] = -1;
 
-		// string에 '5' 추가하기
-		strNum.insert(i, "5");
-
-		// string -> int
-		return stoi(strNum);
+		// 대문자일시
+		if (str[i] >= 'A' && str[i] <= 'Z')
+		{
+			for (int j = i - 1; j >= 0; j--)
+			{
+				if (str[i] + 32 == str[j])
+				{
+					backArray[i] = j;
+					break;
+				}
+			}
+		}
+		// 소문자일시
+		else
+		{
+			for (int j = i - 1; j >= 0; j--)
+			{
+				if (str[i] - 32 == str[j])
+				{
+					backArray[i] = j;
+					break;
+				}
+			}
+		}
 	}
 }
 
-int PlusSolution(string strNum)
+void SearchFront(string str)
 {
-	for (int i = 0; i < strNum.size(); i++)
+	for (int i = 0; i < str.size(); i++)
 	{
-		if (strNum[i] > '5')
-			continue;
+		frontArray[i] = -1;
 
-		// string에 '5' 추가하기
-		strNum.insert(i, "5");
-
-		// string -> int
-		return stoi(strNum);
+		// 대문자일시
+		if (str[i] >= 'A' && str[i] <= 'Z')
+		{
+			for (int j = i + 1; j < str.size(); j++)
+			{
+				if (str[i] + 32 == str[j])
+				{
+					frontArray[i] = j;
+					break;
+				}
+			}
+		}
+		// 소문자일시
+		else
+		{
+			for (int j = i + 1; j < str.size(); j++)
+			{
+				if (str[i] - 32 == str[j])
+				{
+					frontArray[i] = j;
+					break;
+				}
+			}
+		}
 	}
 }
 
-int solution(int n)
+int solution(string str)
 {
-	int answer = 0;
-	string strNum = to_string(n); // int -> string 변환
+	SearchFront(str);
+	SearchBack(str);
 
-	if (n >= 0)
-		answer = PlusSolution(strNum);
-	else
-		answer = MinusSolution(strNum);
+	int shortest = INT_MAX;
+	int start, end;
 
-	return answer;
+	for (int i = 0; i < str.size(); i++)
+	{
+		if (frontArray[i] == -1)
+			continue;
+
+		start = i;
+		end = frontArray[i];
+
+		for (int j = start + 1; j < end; j++)
+		{
+			if (frontArray[j] == -1 && backArray[j] == -1)
+			{
+				start = -1;
+				end = -1;
+				break;
+			}
+
+			if (frontArray[j] > end)
+				end = frontArray[j];
+			else
+			{
+				if (backArray[j] != -1 && backArray[j] < start)
+				{
+					start = -1;
+					end = -1;
+					break;
+				}
+			}
+		}
+
+
+		if (start == end)
+			continue;
+
+
+		if (shortest > end - start + 1)
+			shortest = end - start + 1;
+	}
+
+	if (shortest == INT_MAX)
+		shortest = -1;
+
+	return shortest;
 }
 
 int main()
 {
-	cout << solution(-999);
+	solution("TacoCat");
 }
