@@ -1,6 +1,7 @@
 #include <map>
 #include <iostream>
 using namespace std;
+
 int main()
 {
     map<string, int> m;
@@ -14,7 +15,8 @@ int main()
         // found
     }
 
-    for (auto it = m.begin(); it != m.end(); it++) {
+    for (auto it = m.begin(); it != m.end(); it++)
+    {
         cout << "key : " << it->first << " " << "value : " << it->second << '\n';
     }
 }
